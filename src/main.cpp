@@ -2,16 +2,14 @@
 #include <array>
 #include <vector>
 
-template <typename T>
-void quicksort(T &&array, const int &start, const int &end)
-{
+auto quicksort = [](auto &array, const int &start, const int &end) -> void {
   if (start >= end)
     return;
 
   auto swap = [](auto &a, auto &b) -> void {
-    auto temp = a;
-    a = b;
-    b = temp;
+    auto temp = std::move(a);
+    a = std::move(b);
+    b = std::move(temp);
   };
 
   int pivotIndex = start;
@@ -28,9 +26,9 @@ void quicksort(T &&array, const int &start, const int &end)
 
   swap(array[pivotIndex], array[end]);
 
-  quicksort(std::forward<T>(array), start, pivotIndex - 1);
-  quicksort(std::forward<T>(array), pivotIndex + 1, end);
-}
+  quicksort(array, start, pivotIndex - 1);
+  quicksort(array, pivotIndex + 1, end);
+};
 
 int main()
 {
