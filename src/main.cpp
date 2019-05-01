@@ -6,14 +6,14 @@ auto quicksort = [](auto &array, const int &start, const int &end) -> void {
   if (start >= end)
     return;
 
-  auto swap = [](auto &a, auto &b) -> void {
+  static auto swap = [](auto &a, auto &b) -> void {
     auto temp = std::move(a);
     a = std::move(b);
     b = std::move(temp);
   };
 
   int pivotIndex = start;
-  auto pivotValue = array[end];
+  auto const &pivotValue = array[end];
 
   for (int i = start; i < end; ++i)
   {
